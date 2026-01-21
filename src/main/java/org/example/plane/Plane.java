@@ -1,13 +1,11 @@
 package org.example.plane;
 
 import io.mavsdk.System;
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 import java.util.concurrent.TimeUnit;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.example.mission.Mission;
 
 @Data
 @ToString(onlyExplicitlyIncluded = true)

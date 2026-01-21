@@ -73,10 +73,4 @@ public class PlaneServiceImpl implements PlaneService {
         })
         .subscribe(onSuccess, onError::accept);
   }
-
-  @Override
-  public void forceLand(@Valid Plane drone, Action onSuccess, Consumer<Throwable> onError) {
-    System mavPointer = drone.getMavPointer();
-    mavPointer.getAction().land().subscribe(onSuccess, onError::accept);
-  }
 }
