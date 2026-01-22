@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.example.mission.Mission;
 
 @Data
 @ToString(onlyExplicitlyIncluded = true)
@@ -17,6 +18,7 @@ public class Plane {
   private String id;
   @NotNull
   private System mavPointer;
+  private Mission activeMission;
 
   public void postCurrentPosAndFlightMode(int millis) {
     if (mavPointer == null) {
@@ -30,6 +32,7 @@ public class Plane {
               pos.getLatitudeDeg(),
               pos.getLongitudeDeg(),
               pos.getRelativeAltitudeM());
+          java.lang.System.out.println("=============================================");
         });
 
     mavPointer.getTelemetry().getFlightMode().throttleLatest(millis, TimeUnit.MILLISECONDS)

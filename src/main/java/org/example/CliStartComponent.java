@@ -1,9 +1,10 @@
 package org.example;
 
 import lombok.RequiredArgsConstructor;
+import org.example.mission.MissionService;
 import org.example.plane.Plane;
 import org.example.plane.PlaneInitializer;
-import org.example.plane.PlaneService;
+import org.example.plane.PlaneMissionService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,17 +13,19 @@ import org.springframework.stereotype.Component;
 public class CliStartComponent implements CommandLineRunner {
 
   private final PlaneInitializer planeInitializer;
-  private final PlaneService planeService;
+  private final PlaneMissionService planeMissionService;
+  private final MissionService missionService;
 
   @Override
   public void run(String... args) throws Exception {
     Plane plane = planeInitializer.initMavlinkSitlPlane();
-    plane.postCurrentPosAndFlightMode(5000);
-    planeService.takeOff(
+    plane.setActiveMission(missionService.createDefaultMission());
+
+    plane.postCurrentPosAndFlightMode(1000);
+    planeMissionService.startMission(
         plane,
-        500.0f,
-        () -> System.out.println("Takeoff command has been sent successfully"),
-        (err) -> System.err.println("Error during takeoff command dispatch: " + err.getMessage())
+        () -> System.out.println("Mission start command was sent successfully"),
+        (e) -> System.err.println("Can't start the mission, error occurred: " + e.getMessage())
     );
   }
 }
